@@ -96,6 +96,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_HOST_USER = '18112596384@163.com'
+EMAIL_HOST_PASSWOD = '1992531'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
