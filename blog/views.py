@@ -1,11 +1,29 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, get_object_or_404
 from .models import Post
-from django.views.generic import ListView
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, SearchForm
 from django.core.mail import send_mail
 from taggit.models import Tag
 from django.db.models import Count
+from haystack.query import SearchQuerySet
+
+
+def post_search(request):
+    form = SearchForm()
+    cd = None
+    results = None
+    total_results = None
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            cd = form.cleaned_data
+            results = SearchQuerySet().models(Post).filter(content=cd['query']).load_all()
+            total_results = results.count()
+    return render(request, 'post/search.html', {'form': form,
+                                                'cd': cd,
+                                                'results': results,
+                                                'total_results': total_results})
+
 
 # class PostListView(ListView):
 #     queryset = Post.published.all()
@@ -56,8 +74,8 @@ def post_detail(request, year, month, day, post):
 
     post_tags_ids = post.tags.values_list('id', flat=True)
     similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
-    similar_posts = similar_posts.annotate(same_tags=Count('tags'))\
-                                 .order_by('-same_tags', '-publish')[:4]
+    similar_posts = similar_posts.annotate(same_tags=Count('tags')) \
+                        .order_by('-same_tags', '-publish')[:4]
 
     return render(request, 'post/detail.html', {'post': post,
                                                 'comments': comments,
@@ -76,9 +94,9 @@ def post_share(request, post_id):
             post_url = request.build_absolute_uri(
                 post.get_absolute_url()
             )
-            subject = '{} ({}) recommends you reading "{}"'.\
+            subject = '{} ({}) recommends you reading "{}"'. \
                 format(cd['name'], cd['email'], post.title)
-            message = 'Read "{}" at {}\n\n{}\' comments: {}'.\
+            message = 'Read "{}" at {}\n\n{}\' comments: {}'. \
                 format(post.title, post_url, cd['name'], cd['comments'])
             send_mail(subject, message, 'admin@myblog.com', [cd['to']])
             sent = True
@@ -87,5 +105,3 @@ def post_share(request, post_id):
     return render(request, 'post/share.html', {'post': post,
                                                'form': form,
                                                'sent': sent})
-
-
