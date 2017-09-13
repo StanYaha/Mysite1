@@ -1,36 +1,61 @@
 {% extends "base.html" %}
 {% load blog_tags %}
 
-{% block title %}My Blog{% endblock %}
+
+
+{% block title %}Stan Blog{% endblock %}
 
 {% block content %}
-<h1>MyBlog</h1>
+    <div class="jztop"></div>
+    <div class="content cont-class container">
+        <div class="bloglist f_l">
+            <div class="arclist">
+                <ul>
+                    {% for post in posts %}
+                            <div class="arc-right">
+                                {% if tag %}
+                                    <h2>Posts tagged with "{{ tag.name }}"</h2>
+                                {% endif %}
+                                {#                        <p class="tags">#}
+                                {#                            Tags:#}
+                                {#                            {% for tag in post.tags.all %}#}
+                                {#                                <a href="{% url "blog:post_list_by_tag" tag.slug %}">#}
+                                {#                                    {{ tag.name }}#}
+                                {#                                </a>#}
+                                {#                                {% if not forloop.last %}, {% endif %}#}
+                                {#                            {% endfor %}#}
+                                {#                        </p>#}
+                                {#                            <h4 class="blue-text">#}
+                                {#                                <a href="{% url "blog:detail" pk=article.id %}"#}
+                                {#                                                     title="{{ article.title }}">#}
+                                {#                                    {{ article.title }}#}
+                                {#                                </a>#}
+                                {#                            </h4>#}
+                                <h4 class="blue-text">
+                                    <a href="{{ post.get_absolute_url }}" title="{{ post.title }}">
+                                        <h1><font size="5" style="color: rgb(51, 122, 183)">{{ post.title }}</font></h1>
+                                    </a>
+                                    {#                            <p class="tags">Tags: {{ post.tags.all|join:", " }}</p>#}
 
-{% for post in posts %}
-    {% if tag %}
-        <h2>Posts tagged with "{{ tag.name }}"</h2>
-    {% endif %}
-    <p class="tags">
-        Tags:
-        {% for tag in post.tags.all %}
-            <a href="{% url "blog:post_list_by_tag" tag.slug %}">
-                {{ tag.name }}
-            </a>
-            {% if not forloop.last %}, {% endif %}
-            {% endfor %}
-    </p>
-    <h2>
-        <a href="{{ post.get_absolute_url }}">]
-            {{ post.title }}
-        </a>
-        <p class="tags">Tags: {{ post.tags.all|join:", " }}</p>
+                                </h4>
+                                <p class="date">
+                                    Published {{ post.publish }} by {{ post.author }}
+                                </p>
+                            <p>
+                                <span>{{ post.body|markdown|truncatewords:20 }}</span>
+                            </p>
+                            </div>
+                    {% endfor %}
+                </ul>
+            </div>
 
-    </h2>
-    <p class="date">
-     Published {{ post.publish }} by {{ post.author }}
-    </p>
-    {{ post.body|markdown|truncatewords:30 }}
-{% endfor %}
-        {% include "pagination.html" with page=posts %}
+            {% include "pagination.html" with page=posts %}
+        </div>
+    </div>
+    <div class="jzend"></div>
 
+    <footer>
+        <div class="footer">
+        </div>
+    </footer>
 {% endblock %}
