@@ -2,44 +2,6 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
-{#<head>#}
-{#    <title>{% block title %}{% endblock %}</title>#}
-{#    <link href="{% static "css/blog.css" %}" rel="stylesheet">#}
-{#</head>#}
-<div class="topnav">
-    <nav>
-        <div class="navigation">
-            <ul class="menu">
-                <li><a href="index.html">网站首页</a></li>
-                <li><a href="#">关于我</a>
-                    <ul>
-                        <li><a href="about.html">个人简介</a></li>
-                        <li><a href="listpic.html">个人相册</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">我的日记</a>
-                    <ul>
-                        <li><a href="newslistpic.html">个人日记</a></li>
-                        <li><a href="newslistpic.html">学习笔记</a></li>
-                    </ul>
-                </li>
-                <li><a href="newslistpic.html">技术文章</a></li>
-                <li><a href="#">给我留言</a></li>
-            </ul>
-        </div>
-    </nav>
-    <SCRIPT type=text/javascript>
-        // Navigation Menu
-        $(function () {
-            $(".menu ul").css({display: "none"}); // Opera Fix
-            $(".menu li").hover(function () {
-                $(this).find('ul:first').css({visibility: "visible", display: "none"}).slideDown("normal");
-            }, function () {
-                $(this).find('ul:first').css({visibility: "hidden"});
-            });
-        });
-    </SCRIPT>
-</div>
 <head>
     <meta charset="gb2312">
 
@@ -47,37 +9,40 @@
         {% block title %}
         {% endblock %}
     </title>
-    <meta name="keywords" content="个人博客模板古典系列之――江南墨卷"/>
-    <meta name="description" content="个人博客模板古典系列之――江南墨卷"/>
-    <link href="{% static "css/base.css" %}" rel="stylesheet">
-    <link href="{% static "css/index.css" %}" rel="stylesheet">
-    <script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
-
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css" />
 </head>
+
+
 <body>
-<div id="wrap">
-    <div id="content" style="height:340px;">
-        {% block content %}
+    <div id="page" class="site">
+         <header class="site-header">
+              <hgroup>
+                  <h1>Test</h1>
+                  <h2>It's a css test!</h2>
+              </hgroup>
+         {% include 'nav.html' %}
+         </header>
+
+
+    <div id="main" class="wrapper">
+    {% block content %}
         {% endblock %}
     </div>
 
-{#    <div id="sidebar" style="height:340px;">#}
-{#        <h2>My blog</h2>#}
-{#        <p>This is my blog. I've written {% total_posts %} posts so far</p>#}
-{#        <h3>Latest posts</h3>#}
-{#        {% show_latest_posts %}#}
-{#        <h3>Most commented posts</h3>#}
-{#        {% get_most_commented_posts as most_commented_posts %}#}
-{#        <ul>#}
-{#            {% for post in most_commented_posts %}#}
-{#                <li>#}
-{#                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>#}
-{#                </li>#}
-{#            {% endfor %}#}
-{#        </ul>#}
-{#    </div>#}
-</div>
+
+    </div>
 
 
 </body>
+
+
+
+<!--<footer>-->
+        <!--<script type="text/javascript" src="{% static 'blog/js/jquery-3.1.1.js' %}"></script>-->
+        <!--<script type="text/javascript" src="{% static 'blog/js/nprogress.js' %}"></script>-->
+        <!--<script src="{% static 'blog/js/blog.js' %}" type="application/javascript"></script>-->
+        <!--<script src="{% static 'blog/js/navigation.js' %}" type="application/javascript"></script>-->
+    <!--{% block footer %}-->
+    <!--{% endblock %}-->
+<!--</footer>-->
 </html>

@@ -1,0 +1,8 @@
+Django==1.11.6
+django-haystack==2.6.1
+django-taggit==0.22.1
+Markdown==2.6.9
+pysolr==3.6.0
+requests==2.18.4
+six==1.11.0
+urllib3==1.22

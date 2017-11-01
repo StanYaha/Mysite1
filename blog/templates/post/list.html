@@ -6,13 +6,12 @@
 {% block title %}Stan Blog{% endblock %}
 
 {% block content %}
-    <div class="jztop"></div>
-    <div class="content cont-class container">
-        <div class="bloglist f_l">
-            <div class="arclist">
+    <div id="primary" class="site-content">
+        <div id="content">
+            <div>
                 <ul>
                     {% for post in posts %}
-                            <div class="arc-right">
+                            <!--<div class="arc-right">-->
                                 {% if tag %}
                                     <h2>Posts tagged with "{{ tag.name }}"</h2>
                                 {% endif %}
@@ -31,31 +30,34 @@
                                 {#                                    {{ article.title }}#}
                                 {#                                </a>#}
                                 {#                            </h4>#}
-                                <h4 class="blue-text">
+                                <h4 class="entry-header">
                                     <a href="{{ post.get_absolute_url }}" title="{{ post.title }}">
-                                        <h1><font size="5" style="color: rgb(51, 122, 183)">{{ post.title }}</font></h1>
+                                        <h1 class="entry-header">{{ post.title }}</h1>
                                     </a>
                                     {#                            <p class="tags">Tags: {{ post.tags.all|join:", " }}</p>#}
 
                                 </h4>
-                                <p class="date">
+                                <p class="date article">
                                     Published {{ post.publish }} by {{ post.author }}
                                 </p>
-                            <p>
-                                <span>{{ post.body|markdown|truncatewords:20 }}</span>
+                            <p class="entry-content">
+                                <span>{{ post.body }}</span>
                             </p>
-                            </div>
+                            <!--</div>-->
                     {% endfor %}
                 </ul>
+            <!--</div>-->
             </div>
-
-            {% include "pagination.html" with page=posts %}
-        </div>
+        <!--</div>-->
+                    {% include "pagination.html" with page=posts %}
+            </div>
     </div>
+    <!--</div>-->
     <div class="jzend"></div>
 
     <footer>
         <div class="footer">
+            test
         </div>
     </footer>
 {% endblock %}
